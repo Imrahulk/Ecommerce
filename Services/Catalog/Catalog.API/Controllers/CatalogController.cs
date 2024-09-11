@@ -27,5 +27,27 @@ namespace Catalog.API.Controllers
             return Ok(result);
 
         }
+
+        [HttpGet]
+        [Route("[action]/{productName}", Name = "GetProductByProductName")]
+        [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<ProductResponse>> GetProductByProductName(string productName)
+        {
+            var query = new GetProductByNameQuery(productName);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+
+        }
+        [HttpGet]
+        [Route("GetAllProducts")]
+        [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<ProductResponse>> GetAllProducts()
+        {
+            var query = new GetAllProductsQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+
+        }
     }
 }
