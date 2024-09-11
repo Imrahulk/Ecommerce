@@ -22,4 +22,4 @@ namespace Catalog.Application.Handlers
             return await _productRepository.DeleteProduct(request.Id);
         }
     }
-}
+}//
