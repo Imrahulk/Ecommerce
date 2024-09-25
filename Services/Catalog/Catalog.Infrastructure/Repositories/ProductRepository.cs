@@ -1,5 +1,6 @@
 ﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
+using Catalog.Core.Specs;
 using Catalog.Infrastructure.Data;
 using MongoDB.Driver;
 
@@ -12,7 +13,7 @@ namespace Catalog.Infrastructure.Repositories
         public ProductRepository(ICatalogContext context)
         {
             _context = context;
-        }
+        } 
         async Task<Product> IProductRepository.GetProduct(string id)
         {
             return await _context.Products
@@ -20,8 +21,9 @@ namespace Catalog.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        async Task<IEnumerable<Product>> IProductRepository.GetProducts()
+        async Task<Pagination<Product>> IProductRepository.GetProducts(CatalogSpecParams catalogSpecParams)
         {
+            var filter = Builders<Product>.Filter.Empty;
             return await _context
                 .Products
                 .Find(p => true)
