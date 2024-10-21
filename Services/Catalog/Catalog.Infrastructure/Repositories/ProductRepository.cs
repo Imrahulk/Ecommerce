@@ -48,33 +48,7 @@ namespace Catalog.Infrastructure.Repositories
                 data);
         }
 
-        private async Task<IReadOnlyList<Product>> DataFilter(CatalogSpecParams catalogSpecParams, FilterDefinition<Product> filter)
-        {
-            var sortDefn = Builders<Product>.Sort.Ascending("Name");
-            if (!string.IsNullOrEmpty(catalogSpecParams.Sort))
-            {
-                switch (catalogSpecParams.Sort)
-                {
-                    case "priceAsc":
-                        sortDefn = Builders<Product>.Sort.Ascending(p => p.Price);
-                        break;
-                    case "priceDesc":
-                        sortDefn = Builders<Product>.Sort.Descending(p => p.Price);
-                        break;
-                    default:
-                        sortDefn = Builders<Product>.Sort.Ascending(p => p.Price);
-                        break;
-                }
-            }
-            return await _context
-                .Products
-                .Find(filter)
-                .Sort(sortDefn)
-                .Skip((catalogSpecParams.PageIndex - 1) * catalogSpecParams.PageSize)
-                .Limit(catalogSpecParams.PageSize)
-                .ToListAsync();
 
-        }
         async Task<IEnumerable<Product>> IProductRepository.GetProductsByBrand(string brandName)
         {
             return await _context
@@ -128,6 +102,33 @@ namespace Catalog.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        private async Task<IReadOnlyList<Product>> DataFilter(CatalogSpecParams catalogSpecParams, FilterDefinition<Product> filter)
+        {
+            var sortDefn = Builders<Product>.Sort.Ascending("Name");
+            if (!string.IsNullOrEmpty(catalogSpecParams.Sort))
+            {
+                switch (catalogSpecParams.Sort)
+                {
+                    case "priceAsc":
+                        sortDefn = Builders<Product>.Sort.Ascending(p => p.Price);
+                        break;
+                    case "priceDesc":
+                        sortDefn = Builders<Product>.Sort.Descending(p => p.Price);
+                        break;
+                    default:
+                        sortDefn = Builders<Product>.Sort.Ascending(p => p.Price);
+                        break;
+                }
+            }
+            return await _context
+                .Products
+                .Find(filter)
+                .Sort(sortDefn)
+                .Skip((catalogSpecParams.PageIndex - 1) * catalogSpecParams.PageSize)
+                .Limit(catalogSpecParams.PageSize)
+                .ToListAsync();
+
+        }
 
     }
 }
