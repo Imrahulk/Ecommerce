@@ -35,7 +35,7 @@ var assemblies = new Assembly[]
 };
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 
-var app = builder.Build();
+
 
 //Redis
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -45,6 +45,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 // Application Services
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

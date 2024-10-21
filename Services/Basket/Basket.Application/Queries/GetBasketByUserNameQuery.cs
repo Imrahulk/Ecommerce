@@ -8,7 +8,7 @@ namespace Basket.Application.Queries
         public string UserName { get; set; }
         public GetBasketByUserNameQuery(string userName)
         {
-            UserName = UserName;
+            UserName = userName;
         }
     }
 }
