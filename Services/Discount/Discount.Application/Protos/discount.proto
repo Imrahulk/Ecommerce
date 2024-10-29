@@ -35,7 +35,7 @@ message DeleteDiscountResponse {
   bool success = 1;
 }
 
-//Test 1
+
 
 
 
