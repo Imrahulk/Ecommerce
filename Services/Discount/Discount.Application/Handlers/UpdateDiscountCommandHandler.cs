@@ -17,9 +17,12 @@ namespace Discount.Application.Handlers
             _discountRepository = discountRepository;
             _mapper = mapper;
         }
-        public Task<CouponModel> Handle(UpdateDiscountCommand request, CancellationToken cancellationToken)
+        public async Task<CouponModel> Handle(UpdateDiscountCommand request, CancellationToken cancellationToken)
         {
             var coupon = _mapper.Map<Coupon>(request);
+            await _discountRepository.UpdateDiscount(coupon);
+            var couponModel = _mapper.Map<CouponModel>(coupon);
+            return couponModel;
         }
     }
 }
