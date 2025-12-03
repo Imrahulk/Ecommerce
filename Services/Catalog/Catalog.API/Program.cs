@@ -5,10 +5,16 @@ using System.Reflection;
 using Asp.Versioning;
 using Catalog.Application.Queries;
 using Catalog.Application.Handlers;
+using Serilog;
+using Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//serilog configuration 
+
+builder.Host.UseSerilog(Logging.ConfigureLogger);
 
 builder.Services.AddControllers();
 

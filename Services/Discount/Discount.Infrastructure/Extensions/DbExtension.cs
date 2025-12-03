@@ -25,7 +25,7 @@ namespace Discount.Infrastructure.Extensions
                 catch (Exception ex)
                 {
 
-                    Console.WriteLine(ex);
+                    logger.LogError(ex, "An error occurred while migrating the database.");
                     throw;
                 }
 
